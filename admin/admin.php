@@ -47,7 +47,8 @@
                            <td><?= $row["author"] ?></td>
                            <td><?= $row["create_date"] ?></td>
                            <td>
-                             <a class="btn btn-warning" href="delete.php?id=<?= $row["id"] ?>">Delete</a>
+                             <a style="margin: 10px auto" class="btn btn-warning" href="update.php?id=<?= $row["id"] ?>">Update</a>
+                             <a style="margin: 10px auto" class="btn btn-danger" href="delete.php?id=<?= $row["id"] ?>">Delete</a>
                            </td>
                            </tr>
                            <?php

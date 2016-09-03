@@ -1,9 +1,24 @@
 <?php
 include "admin/db_connect.php";
 
+if (isset($_GET["limit_start"])) {
+  $limit_st = $_GET["limit_start"];
+}else {
+  $limit_st = 0;
+}
+
 $db_telebe = new DB('localhost','root','','blog');
 
 $db_telebe->db_con();
+
+$limit_en = 3;
+$count = 0;
+$query_all = $db_telebe->show("news");
+while ( mysqli_fetch_assoc($query_all)) {
+  $count++;
+}
+
+// echo $count;
 
  ?>
 <!--A Design by W3layouts
@@ -65,7 +80,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="content">
 			<?php
 
-					$query = $db_telebe->show("news");
+					$query = $db_telebe->show("news","","","LIMIT $limit_st, $limit_en");
+          // print_r("<pre>");
+          // print_r($query);
+          //   print_r("</pre>");
+
 					while ($row = mysqli_fetch_assoc($query)) {
 						$header = first_sent($row["text_first"]);
 						?>
@@ -92,13 +111,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="page_numbers">
 			    <ul>
-				<li><a href="#">1</a>
+
+            <?php
+              $end = ($count - ($count%3))/3 + 1;
+              $limit_start = 0;
+              $limit_end = 0;
+              for ($i=1; $i <= $end; $i++) {
+                ?>
+                <li><a href="index.php?limit_start=<?= $limit_start ?>"><?= $i ?></a>
+                <?php
+                $limit_start+=3;
+              }
+
+             ?>
+				<!-- <li><a href="#">1</a>
 				<li><a href="#">2</a>
 				<li><a href="#">3</a>
 				<li><a href="#">4</a>
 				<li><a href="#">5</a>
 				<li><a href="#">6</a>
-				<li><a href="#">... Next</a>
+				<li><a href="#">... Next</a> -->
 				</ul>
 			</div>
 		<div class="clear"></div>

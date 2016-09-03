@@ -24,9 +24,9 @@
       // }
     }
 
-    public function show ($table, $where = "", $id = "", $how = '*'){
+    public function show ($table, $where = "", $id = "",$limit = "", $how = '*'){
       if ($this->db_con) {
-        $sql = "SELECT $how FROM $table $where  $id ";
+        $sql = "SELECT $how FROM $table $where  $id $limit";
         $query = mysqli_query($this->db_con,$sql);
         return $query;
       }
@@ -37,6 +37,14 @@
         $sql = "INSERT INTO $table ( $column ) VALUES ($value)";
         $query = mysqli_query($this->db_con,$sql);
         return $sql;
+      }
+    }
+
+    public function update ($table,$column,$keyword){
+      if ($this->db_con) {
+        $sql = "UPDATE $table SET  $column  WHERE $keyword";
+        $query = mysqli_query($this->db_con,$sql);
+        return $query;
       }
     }
 
@@ -56,13 +64,13 @@
       }
     }
 
-    public function update ($table, $col_val = "", $keyword = ""){
-      if ($this->db_con) {
-        $sql = "UPDATE $table SET $col_val WHERE  $keyword";
-        $query = mysqli_query($this->db_con,$sql);
-        return $query;
-      }
-    }
+    // public function update ($table, $col_val = "", $keyword = ""){
+    //   if ($this->db_con) {
+    //     $sql = "UPDATE $table SET $col_val WHERE  $keyword";
+    //     $query = mysqli_query($this->db_con,$sql);
+    //     return $query;
+    //   }
+    // }
   }
 
 
